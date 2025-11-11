@@ -27,10 +27,25 @@ void logic_operation(MyArray<char>& line, int i, char oper){
 bool solve_logic(MyArray<char>& line){
     MyStack<char> operations = {'^', '|', '&'};
     for (int i = 0; i < line.size; i++){
-        if (line.data[i].key == '!'){
+        if (line.data[i].key == '!' && line.data[i + 1].key != '('){
             MDEL(line, i);
             MSWAP(line, i, (line.data[i].key == '1') ? '0' : '1');
         }
+        if (line.data[i].key == '!' && line.data[i + 1].key == '('){
+     
+           MDEL(line, i);
+           MDEL(line, i);
+           MyArray<char> line_in{10};
+           while (line.data[i].key != ')'){
+               MPUSH_back(line_in, line.data[i].key);
+               MDEL(line, i);
+           }
+
+           bool result_in = solve_logic(line_in);
+           result_in = !result_in;
+           MSWAP(line, i, static_cast<char>('0' + result_in));
+       }
+        
         if (line.data[i].key == '('){
             MDEL(line, i);
             MyArray<char> line_in{10};
