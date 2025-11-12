@@ -6,10 +6,10 @@ using namespace std;
 
 int gen_closeness(const string& firstGen, const string& secondGen){
     int closenessCount = 0;
-    MySet<string, string> gens{10};
+    MySet<string> gens{10};
     for (int i = 0; i < firstGen.size() - 1; i++){
         string genPair = string(1, firstGen[i]) + firstGen[i+1];
-        gens.SETADD(genPair, genPair);
+        gens.SETADD(genPair);
     }
     
     for (int i = 0; i < secondGen.size() - 1; i++){
